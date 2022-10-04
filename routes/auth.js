@@ -1,18 +1,18 @@
-const { application } = require('express');
 const express = require('express');
-const { off } = require('../models/product');
 const router = express.Router();
-const Product = require('../models/product');
+const Auth = require('../models/auth');
+
+
 // const Product = ProductData.product;
 // const Category = require('../models/category');
 
 
-router.get(`/`, async (req, resp) => {
+router.get(`/login`, async (req, resp) => {
     console.log("in routs data")
 
     // const productList = await Product.find();
-    const productList = await Product.find().select('name image -_id');//here only passed parameter we get
-    if (!productList) {
+    const authData = await Auth.find().select('name image -_id');//here only passed parameter we get
+    if (!authData) {
         resp.send(500).json({
             success: false
         })
@@ -22,9 +22,9 @@ router.get(`/`, async (req, resp) => {
 
 
 
-router.post(`/`, (req, resp) => {
+router.post(`/register`, (req, resp) => {
 
-    const product = new Product({
+    const auth = new Auth({
         name: req.body.name,
         image: req.body.image,
         stock: req.body.stock,
