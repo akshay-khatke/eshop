@@ -1,55 +1,61 @@
 const { application } = require('express');
 const express = require('express');
-const { off } = require('../models/product');
+// const { off } = require('../models/product');
 const router = express.Router();
-const Product = require('../models/product');
+// const Product = require('../models/product');
+const {GetProducts,CreateProduct,GetProductById}=require('../controller/productController')
+
 // const Product = ProductData.product;
 // const Category = require('../models/category');
 
 
-router.get(`/`, async (req, resp) => {
-    console.log("in routs data")
+// router.get(`/`, async (req, resp) => {
+//     console.log("in routs data")
 
-    // const productList = await Product.find();
-    const productList = await Product.find().select('name image -_id');//here only passed parameter we get
-    if (!productList) {
-        resp.send(500).json({
-            success: false
-        })
-    }
-    resp.send(productList);
-});
-
-
-
-router.post(`/`, (req, resp) => {
-
-    const product = new Product({
-        name: req.body.name,
-        image: req.body.image,
-        stock: req.body.stock,
-    })
-
-    product.save().then((cretatedProduct) => {
-        resp.status(201).json(cretatedProduct)
-    }).catch((err) => {
-        resp.status(500).json({
-            error: err,
-            success: false
-        })
-    })
-});
+//     // const productList = await Product.find();
+//     const productList = await Product.find().select('name image -_id');//here only passed parameter we get
+//     if (!productList) {
+//         resp.send(500).json({
+//             success: false
+//         })
+//     }
+//     resp.send(productList);
+// });
 
 
-router.get('/:id',async(req,resp)=>{
-    const product=await Product.findById(req.params.id);
 
-    if(!product){
-        resp.status(500).json({success: false})
-    }
-    resp.send(product)
-})
+// router.post(`/`, (req, resp) => {
 
+//     const product = new Product({
+//         name: req.body.name,
+//         image: req.body.image,
+//         stock: req.body.stock,
+//     })
+
+//     product.save().then((cretatedProduct) => {
+//         resp.status(201).json(cretatedProduct)
+//     }).catch((err) => {
+//         resp.status(500).json({
+//             error: err,
+//             success: false
+//         })
+//     })
+// });
+
+
+// router.get('/:id',async(req,resp)=>{
+//     const product=await Product.findById(req.params.id);
+
+//     if(!product){
+//         resp.status(500).json({success: false})
+//     }
+//     resp.send(product)
+// });
+console.log(GetProductById,CreateProduct,"check")
+
+router.get('/getProducts',GetProducts)
+router.post('/createProduct',CreateProduct)
+router.get('/getProductById/:id',GetProductById)
 
 
 // router.post(`/`, (req, resp) => {

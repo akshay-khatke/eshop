@@ -34,11 +34,23 @@ const indexRoutes=require('./routes/routes')
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use('/api/v1',indexRoutes)
+
+app.all('/*',(req,resp,next)=>{
+    resp.header("Access-Control-Allow-Origin","*")
+    resp.header("Access-Control-Allow-Credentials",'true')
+    resp.header("Access-Control-Allow-Headers",'Origin, X-Requested-With,Content-Type,Accept,Key,Authorization')
+    resp.header('Access-Control-Allow-Methods',"GET,POST,OPTIONS,PUT,DELETE,PATCH")
+next()
+})
+
+
 //routes
-app.use(`/api/v1/products`, productRouter)//it will executes the file with this endpint and which request done
-app.use(`/api/v1/categories`, categoryRouter)//api/v1/categories its a endpoint of api
-app.use(`/api/v1/users`, userRouter)
-app.use(`/api/v1/orders`, orderRouter)
+// app.use(`/api/v1/products`, productRouter)//it will executes the file with this endpint and which request done
+// app.use(`/api/v1/categories`, categoryRouter)//api/v1/categories its a endpoint of api
+// app.use(`/api/v1/users`, userRouter)
+// app.use(`/api/v1/orders`, orderRouter)
+
+
 
 mongoose.connect(process.env.CONNECTION_STRING, {
     dbName: "eshopdb",

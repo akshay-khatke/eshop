@@ -1,7 +1,12 @@
 const userRouter=require('./users')
-const router=express.Router()
+const productRouter=require('./products')
 
-app.use(`/users`, userRouter)
+const express = require('express');
+
+const router=express.Router();
+router.use('/user',userRouter)
+router.use('/products',productRouter)
 
 
-export default router
+
+module.exports= router;
